@@ -33,7 +33,7 @@ app.get("/", async (req, res) => {
     const users = await User.find();
     return res.json(users);
   } catch (err) {
-    return res.json({ Message: err.message });
+    return res.status(500).json({ Message: err.message });
   }
 });
 
@@ -48,7 +48,7 @@ app.post("/userRegistration", async (req, res) => {
     const savedUser = await newUser.save();
     return res.json(savedUser);
   } catch (err) {
-    return res.json({ Message: err.message });
+    return res.status(500).json({ Message: err.message });
   }
 });
 
@@ -58,9 +58,9 @@ app.get("/read/:id", async (req, res) => {
     if (!user) {
       return res.status(404).json({ Message: "User not found" });
     }
-    return res.json(user);
+    return res.json([user]); // Return as array for consistency with frontend expectations
   } catch (err) {
-    return res.json({ Message: err.message });
+    return res.status(500).json({ Message: err.message });
   }
 });
 
@@ -81,7 +81,7 @@ app.put("/update/:id", async (req, res) => {
     }
     return res.json(updatedUser);
   } catch (err) {
-    return res.json({ Message: err.message });
+    return res.status(500).json({ Message: err.message });
   }
 });
 
@@ -94,7 +94,7 @@ app.delete("/delete/:id", async (req, res) => {
     }
     return res.json({ Message: "User deleted successfully" });
   } catch (err) {
-    return res.json({ Message: err.message });
+    return res.status(500).json({ Message: err.message });
   }
 });
 
